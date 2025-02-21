@@ -19,7 +19,7 @@ class ContactAdminMail extends Mailable
      */
     public function __construct(public array $contactInfo)
     {
-        // 
+        //
     }
 
     /**
@@ -28,8 +28,11 @@ class ContactAdminMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new \Illuminate\Mail\Mailables\Address($this->contactInfo['email'], $this->contactInfo['name']),
-            subject: 'お問い合わせがありました。',
+            from: new \Illuminate\Mail\Mailables\Address(
+                $this->contactInfo["email"],
+                $this->contactInfo["name"]
+            ),
+            subject: "お問い合わせがありました。"
         );
     }
 
@@ -38,8 +41,6 @@ class ContactAdminMail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            text: 'emails.contact.admin',
-        );
+        return new Content(text: "emails.contact.admin");
     }
 }

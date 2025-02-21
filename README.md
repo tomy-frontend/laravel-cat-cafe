@@ -65,3 +65,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 # laravel-cat-cafe
+
+## 開発モード立ち上げ方法
+```
+sail up -d
+```
+
+## 開発モード終了方法
+```
+sail donw
+```
