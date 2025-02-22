@@ -34,4 +34,7 @@ class UpdateBlogRequest extends FormRequest
             "body" => ["required", "max:20000"],
         ];
     }
+
+    // 注意点 画像の表示は
+    // sail artisan storage:link で作成したシンボリックリンクを参照する。これがないと画像表示されない。
 }
