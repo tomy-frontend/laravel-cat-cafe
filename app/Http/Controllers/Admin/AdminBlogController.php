@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
+use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
 {
@@ -51,5 +53,22 @@ class AdminBlogController extends Controller
     {
         $blog = Blog::findOrFail($id);
         return view("admin.blogs.edit", ['blog' => $blog]);
+    }
+
+    // 指定したIDのブログの更新処理
+    public function update(UpdateBlogRequest $request, string $id)
+    {
+        $blog = Blog::findOrFail($id);
+        $updateData = $request->validated();
+
+        // 画像を変更する場合
+        if ($request->hasFile('image')) {
+            // 変更前の画像を削除
+            Storage::disk('public')->delete($blog->image);
+            $updateData['image'] = $request->file('image')->store('blogs', 'public');
+        }
+        $blog->update($updateData);
+
+        return to_route("admin.blogs.index")->with("success", "ブログを更新しました。");
     }
 }

@@ -9,5 +9,7 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["title", "body"];
+    // 一括代入を許可する属性(これを指定しない属性は一括代入できない)
+    // $fillableはデータベースレベルでの保護
+    protected $fillable = ["title", "body", "image"];
 }
