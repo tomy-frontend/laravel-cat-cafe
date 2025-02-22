@@ -30,3 +30,6 @@ Route::get("/admin/blogs/{blog}", [AdminBlogController::class, "edit"])->name(
 Route::put("/admin/blogs/{blog}", [AdminBlogController::class, "update"])->name(
     "admin.blogs.update"
 );
+Route::delete("/admin/blogs/{blog}", [AdminBlogController::class, "destroy"])->name(
+    "admin.blogs.destroy"
+);
