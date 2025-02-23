@@ -13,8 +13,8 @@ class AdminBlogController extends Controller
     // ブログ一覧画面の表示
     public function index()
     {
-        // データベースからブログを全て取得取得
-        $blogs = Blog::all();
+        // データベースからupdated_atで並べて昇順に10件表示、ページネーション設置
+        $blogs = Blog::latest('updated_at')->limit(10)->simplePaginate(10);
         // ブログ一覧画面にブログデータを渡す
         return view("admin.blogs.index", ['blogs' => $blogs]);
     }
