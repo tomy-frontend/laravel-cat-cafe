@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
 {
-    // ブログ一覧画面
+    // ブログ一覧画面の表示
     public function index()
     {
+        // データベースからブログを全て取得取得
         $blogs = Blog::all();
+        // ブログ一覧画面にブログデータを渡す
         return view("admin.blogs.index", ['blogs' => $blogs]);
     }
 
