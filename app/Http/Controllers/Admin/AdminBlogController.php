@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class AdminBlogController extends Controller
@@ -53,14 +54,16 @@ class AdminBlogController extends Controller
     // 指定したIDのブログ編集画面
     public function edit(Blog $blog)
     {
-        return view("admin.blogs.edit", ['blog' => $blog]);
+        // データベースからcategoriesテーブルの全データ取得
+        $categories = Category::all();
+        return view("admin.blogs.edit", ['blog' => $blog, 'categories' => $categories]);
     }
 
     // 指定したIDのブログの更新処理
     public function update(UpdateBlogRequest $request, string $id)
     {
         $blog = Blog::findOrFail($id);
-        $updateData = $request->validated();
+        $updateData = $request->validated(); // UpdateBlogRequestで定義されたルールに基づいてバリデーションされたデータを、変数$updateDataに格納
 
         // 画像を変更する場合
         if ($request->hasFile('image')) {
@@ -68,6 +71,7 @@ class AdminBlogController extends Controller
             Storage::disk('public')->delete($blog->image);
             $updateData['image'] = $request->file('image')->store('blogs', 'public');
         }
+        $blog->category()->associate($updateData['category_id']); // ブログ更新時にカテゴリーをassociate()で紐づける
         $blog->update($updateData);
 
         return to_route("admin.blogs.index")->with("success", "ブログを更新しました。");
