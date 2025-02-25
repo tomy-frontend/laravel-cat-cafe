@@ -18,4 +18,10 @@ class Blog extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    // catsカテゴリーとのリレーション多対多
+    public function cats()
+    {
+        return $this->belongsToMany(Cat::class)->withTimestamps();
+    }
 }

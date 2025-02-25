@@ -33,6 +33,7 @@ class UpdateBlogRequest extends FormRequest
                 "dimensions:min_width=50,min_height=50,max_width=4000,max_height=4000", // より柔軟な解像度制限
             ],
             "body" => ["required", "max:20000"],
+            'cats.*' => ['distinct', 'exists:cats,id'], // 複数ある時は.*をつける
         ];
     }
 

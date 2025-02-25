@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreBlogRequest;
 use App\Http\Requests\Admin\UpdateBlogRequest;
 use App\Models\Blog;
+use App\Models\Cat;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
@@ -56,7 +57,15 @@ class AdminBlogController extends Controller
     {
         // データベースからcategoriesテーブルの全データ取得
         $categories = Category::all();
-        return view("admin.blogs.edit", ['blog' => $blog, 'categories' => $categories]);
+        $cats = Cat::all();
+        return view(
+            "admin.blogs.edit",
+            [
+                'blog' => $blog,
+                'categories' => $categories,
+                'cats' => $cats
+            ]
+        );
     }
 
     // 指定したIDのブログの更新処理
@@ -73,6 +82,8 @@ class AdminBlogController extends Controller
         }
         $blog->category()->associate($updateData['category_id']); // ブログ更新時にカテゴリーをassociate()で紐づける
         $blog->update($updateData);
+        // null合体演算子で、未選択の場合は、空の配列を返す
+        $blog->cats()->sync($updateData['cats'] ?? []); // ブログ更新時にねこちゃんをsync()で紐づける
 
         return to_route("admin.blogs.index")->with("success", "ブログを更新しました。");
     }
