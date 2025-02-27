@@ -19,7 +19,7 @@ Route::get("/contact/complete", [ContactController::class, "complete"])->name(
 // ブログ
 Route::get("/admin/blogs", [AdminBlogController::class, "index"])->name(
     "admin.blogs.index"
-);
+)->middleware('auth');
 Route::get("/admin/blogs/create", [AdminBlogController::class, "create"])->name(
     "admin.blogs.create"
 );
@@ -28,7 +28,7 @@ Route::post("/admin/blogs", [AdminBlogController::class, "store"])->name(
 );
 Route::get("/admin/blogs/{blog}", [AdminBlogController::class, "edit"])->name(
     "admin.blogs.edit"
-);
+)->middleware('auth');
 Route::put("/admin/blogs/{blog}", [AdminBlogController::class, "update"])->name(
     "admin.blogs.update"
 );

@@ -30,6 +30,9 @@ class AuthController extends Controller
 
             // ミドルウェアに対応したリダイレクト(後述)
             // 下記はredirect('/admin/blogs')に類似
+            // intendedメソッドはリダイレクト先のURLを指定するメソッド,
+            // 例)ログインしていない状態でブログの編集ページに行こうとするとログイン画面に戻される。
+            // その後ログインするとブログの編集ページにリダイレクトされる。
             return redirect()->intended('/admin/blogs');
         }
 
