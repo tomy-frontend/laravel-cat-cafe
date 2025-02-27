@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // リダイレクト先のルート名を指定
-        // すでにログインしている場合はブログ一覧ページにリダイレクト、メソッドチェーンを利用することも可能
+        // ログインしていない場合はログインページにリダイレクト、
+        // すでにログインしている場合はブログ一覧ページにリダイレクトするミドルウェア
+        // メソッドチェーンを利用することも可能
         $middleware
             ->redirectGuestsTo(fn() => route('admin.login'))
             ->redirectUsersTo(fn() => route('admin.blogs.index'));
