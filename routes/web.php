@@ -9,12 +9,16 @@ use Illuminate\Support\Facades\Route;
 // ルートディレクトリ
 Route::view("/", "index");
 
-// contactページ
-Route::get("/contact", [ContactController::class, "index"])->name("contact");
-Route::post("/contact", [ContactController::class, "sendMail"]);
-Route::get("/contact/complete", [ContactController::class, "complete"])->name(
-    "contact.complete"
-);
+Route::prefix('/contact')
+    ->name('contact.')
+    ->group(function () {
+        // contactページ
+        Route::get("/", [ContactController::class, "index"])->name("index");
+        Route::post("/", [ContactController::class, "sendMail"]);
+        Route::get("/complete", [ContactController::class, "complete"])->name(
+            "complete"
+        );
+    });
 
 // 管理画面
 Route::prefix('/admin')

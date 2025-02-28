@@ -81,7 +81,7 @@ sail up -d
 sail donw
 ```
 
-### PHPMyAdmin
+### PHPMyAdmin の path
 
 ```
 http://localhost:8888/
